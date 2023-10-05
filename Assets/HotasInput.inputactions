@@ -1,0 +1,105 @@
+{
+    "name": "HotasInput",
+    "maps": [
+        {
+            "name": "Hotas",
+            "id": "6d133562-5938-4be1-9de4-07f934ae73cf",
+            "actions": [
+                {
+                    "name": "Trigger",
+                    "type": "Button",
+                    "id": "7085e214-c178-4c5e-89e2-bfee17d2686f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AIm",
+                    "type": "Value",
+                    "id": "52f2d188-40a4-446d-9bcd-c62fbe02b7e7",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Drive",
+                    "type": "Value",
+                    "id": "be08ac82-da51-48a5-9507-42a1ea28865a",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Turn",
+                    "type": "Value",
+                    "id": "c4d2c920-db15-4946-ab33-bf996d4d52a8",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fea44f19-5b1a-43a5-a25e-3bbbe5318916",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4f67fce-8363-46d9-88ac-834fd17fa424",
+                    "path": "<Joystick>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82f3022e-e416-4dbd-974b-78a647fdb8e5",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AIm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dcfeb529-9a4e-4c7a-8dc2-189da333974f",
+                    "path": "<HID::Thrustmaster T.Flight Hotas X>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f8c031cc-6d70-4fce-bda0-344d62baa92b",
+                    "path": "<HID::Thrustmaster T.Flight Hotas X>/slider",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Turn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
