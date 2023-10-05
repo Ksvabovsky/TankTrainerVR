@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,16 +20,31 @@ public class PlayerController : MonoBehaviour
 
     public GameObject Turret;
 
+    public GameObject BulletPrefab;
+    public GameObject Barrel;
+
     public float turretRotSpeed;
 
     public GameObject Cannon;
 
     public float CannonRotSpeed;
 
+    public bool VR;
+    public GameObject Rig;
+    public GameObject PlayerCamer;
+
     private void Awake()
     {
         input = new HotasInput();
         input.Enable();
+
+        if(VR == false)
+        {
+            Rig.SetActive(false);
+            PlayerCamer.SetActive(true);
+        }
+
+        input.Hotas.Trigger.performed += Shoot;
     }
 
 
@@ -50,5 +67,13 @@ public class PlayerController : MonoBehaviour
         Turret.transform.Rotate(new Vector3(0f,turretRotSpeed * aiming.x * Time.deltaTime), Space.Self);
 
         Cannon.transform.Rotate(new Vector3(CannonRotSpeed * aiming.y * Time.deltaTime,0f,0f), Space.Self);
+    }
+
+
+    void Shoot(InputAction.CallbackContext context)
+    {
+        GameObject bullet = Instantiate(BulletPrefab, Barrel.transform.position,Barrel.transform.rotation);
+        Rigidbody rigidbody = bullet.GetComponent<Rigidbody>();
+        rigidbody.velocity = Barrel.transform.forward * 200;
     }
 }
