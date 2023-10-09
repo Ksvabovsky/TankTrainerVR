@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Strafe",
+                    "type": "Value",
+                    "id": "5a81eb3f-a1fe-459d-898e-a7d79289e8e6",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -90,11 +99,22 @@
                 {
                     "name": "",
                     "id": "f8c031cc-6d70-4fce-bda0-344d62baa92b",
-                    "path": "<HID::Thrustmaster T.Flight Hotas X>/slider",
+                    "path": "<HID::Thrustmaster T.Flight Hotas X>/rz",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Turn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "629b9b63-7819-4661-babe-82093ed2df34",
+                    "path": "<HID::Thrustmaster T.Flight Hotas X>/slider",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Strafe",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

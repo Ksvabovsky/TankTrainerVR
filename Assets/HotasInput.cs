@@ -62,6 +62,15 @@ public partial class @HotasInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Strafe"",
+                    ""type"": ""Value"",
+                    ""id"": ""5a81eb3f-a1fe-459d-898e-a7d79289e8e6"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -112,11 +121,22 @@ public partial class @HotasInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f8c031cc-6d70-4fce-bda0-344d62baa92b"",
-                    ""path"": ""<HID::Thrustmaster T.Flight Hotas X>/slider"",
+                    ""path"": ""<HID::Thrustmaster T.Flight Hotas X>/rz"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Turn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""629b9b63-7819-4661-babe-82093ed2df34"",
+                    ""path"": ""<HID::Thrustmaster T.Flight Hotas X>/slider"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Strafe"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -131,6 +151,7 @@ public partial class @HotasInput: IInputActionCollection2, IDisposable
         m_Hotas_AIm = m_Hotas.FindAction("AIm", throwIfNotFound: true);
         m_Hotas_Drive = m_Hotas.FindAction("Drive", throwIfNotFound: true);
         m_Hotas_Turn = m_Hotas.FindAction("Turn", throwIfNotFound: true);
+        m_Hotas_Strafe = m_Hotas.FindAction("Strafe", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -196,6 +217,7 @@ public partial class @HotasInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Hotas_AIm;
     private readonly InputAction m_Hotas_Drive;
     private readonly InputAction m_Hotas_Turn;
+    private readonly InputAction m_Hotas_Strafe;
     public struct HotasActions
     {
         private @HotasInput m_Wrapper;
@@ -204,6 +226,7 @@ public partial class @HotasInput: IInputActionCollection2, IDisposable
         public InputAction @AIm => m_Wrapper.m_Hotas_AIm;
         public InputAction @Drive => m_Wrapper.m_Hotas_Drive;
         public InputAction @Turn => m_Wrapper.m_Hotas_Turn;
+        public InputAction @Strafe => m_Wrapper.m_Hotas_Strafe;
         public InputActionMap Get() { return m_Wrapper.m_Hotas; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -225,6 +248,9 @@ public partial class @HotasInput: IInputActionCollection2, IDisposable
             @Turn.started += instance.OnTurn;
             @Turn.performed += instance.OnTurn;
             @Turn.canceled += instance.OnTurn;
+            @Strafe.started += instance.OnStrafe;
+            @Strafe.performed += instance.OnStrafe;
+            @Strafe.canceled += instance.OnStrafe;
         }
 
         private void UnregisterCallbacks(IHotasActions instance)
@@ -241,6 +267,9 @@ public partial class @HotasInput: IInputActionCollection2, IDisposable
             @Turn.started -= instance.OnTurn;
             @Turn.performed -= instance.OnTurn;
             @Turn.canceled -= instance.OnTurn;
+            @Strafe.started -= instance.OnStrafe;
+            @Strafe.performed -= instance.OnStrafe;
+            @Strafe.canceled -= instance.OnStrafe;
         }
 
         public void RemoveCallbacks(IHotasActions instance)
@@ -264,5 +293,6 @@ public partial class @HotasInput: IInputActionCollection2, IDisposable
         void OnAIm(InputAction.CallbackContext context);
         void OnDrive(InputAction.CallbackContext context);
         void OnTurn(InputAction.CallbackContext context);
+        void OnStrafe(InputAction.CallbackContext context);
     }
 }

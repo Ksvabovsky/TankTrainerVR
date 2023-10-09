@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     public float drive;
 
+    public float strafe;
+
     public float speed;
 
     public float turn;
@@ -58,10 +60,13 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         drive = input.Hotas.Drive.ReadValue<float>();
+        strafe = input.Hotas.Strafe.ReadValue<float>();
         turn = input.Hotas.Turn.ReadValue<float>();
         aiming = input.Hotas.AIm.ReadValue<Vector2>();
+        
 
         this.transform.Translate(this.transform.forward * speed * drive *Time.deltaTime);
+        this.transform.Translate(this.transform.forward * 5f * strafe * Time.deltaTime);
         this.transform.Rotate(0f, rotSpeed * turn * Time.deltaTime, 0f);
 
         Turret.transform.Rotate(new Vector3(0f,turretRotSpeed * aiming.x * Time.deltaTime), Space.Self);
