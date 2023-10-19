@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         aiming = input.Hotas.AIm.ReadValue<Vector2>();
 
 
-        rb.AddForce(drive *-1f * moveForce * transform.forward);
+        rb.AddForce(drive * moveForce * transform.forward);
         rb.AddTorque(strafe * turnTorque * transform.up);
 
         //this.transform.Rotate(0f, rotSpeed * turn * Time.deltaTime, 0f);
