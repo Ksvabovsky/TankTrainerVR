@@ -78,7 +78,8 @@ public class PlayerController : MonoBehaviour
 
 
         rb.AddForce(drive * moveForce * transform.forward);
-        rb.AddTorque(strafe * turnTorque * transform.up);
+        rb.AddForce(strafe * moveForce * transform.right);
+        rb.AddTorque(turn * turnTorque * transform.up);
 
         //this.transform.Rotate(0f, rotSpeed * turn * Time.deltaTime, 0f);
 
