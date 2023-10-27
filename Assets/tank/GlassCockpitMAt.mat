@@ -129,7 +129,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HexBased_on_Time: 1
-    - _HexPosition: 4.49
+    - _HexPosition: 2.64
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -143,7 +143,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _WorkflowMode: 1
-    - _Xposition: 1.71
+    - _Xposition: 0.48
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

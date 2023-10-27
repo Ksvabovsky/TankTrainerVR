@@ -1806,7 +1806,7 @@ MonoBehaviour:
   turretRotSpeed: 25
   Cannon: {fileID: 293960783407247891}
   CannonRotSpeed: 25
-  VR: 0
+  VR: 1
   Rig: {fileID: 516074543}
   PlayerCamer: {fileID: 965734811}
   multiplier: 1
