@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -44,6 +45,12 @@ public class PlayerController : MonoBehaviour
     public Transform[] anchors = new Transform[4];
     RaycastHit[] hits = new RaycastHit[4];
 
+    public GameObject joystick;
+    public GameObject throttle;
+
+    public float joyAngle;
+    public float throttleDist;
+    public Vector3 originThrottle;
 
     private void Awake()
     {
@@ -65,7 +72,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        originThrottle = throttle.transform.localPosition;
     }
 
     // Update is called once per frame
@@ -86,6 +93,9 @@ public class PlayerController : MonoBehaviour
         Turret.transform.Rotate(new Vector3(0f,turretRotSpeed * aiming.x * Time.deltaTime), Space.Self);
 
         Cannon.transform.Rotate(new Vector3(CannonRotSpeed * aiming.y * Time.deltaTime,0f,0f), Space.Self);
+
+        joystick.transform.localEulerAngles = new Vector3(aiming.y * joyAngle, 0f, aiming.x * joyAngle * -1);
+        throttle.transform.localPosition = new Vector3(originThrottle.x, originThrottle.y, originThrottle.z + throttleDist * drive);
 
         for(int i = 0;i< 4; i++)
         {
