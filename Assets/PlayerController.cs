@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
     public GameObject Rig;
     public GameObject PlayerCamer;
 
+
+    public AnimationCurve hoverPower;
+    public float currentPower;
     public float multiplier;
     public float moveForce, turnTorque;
 
@@ -109,7 +112,8 @@ public class PlayerController : MonoBehaviour
         {
             float force = 0;
             force = Mathf.Abs(1/(hit.point.y - anchor.position.y));
-            rb.AddForceAtPosition(transform.up * force * multiplier, anchor.position, ForceMode.Acceleration);
+            //currentPower = Mathf.Sqrt(multiplier * (hoverPower.Evaluate(force) + 1));
+            rb.AddForceAtPosition(transform.up * force, anchor.position, ForceMode.Acceleration);
         }
     }
 
