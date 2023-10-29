@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour
 
     public float CannonRotSpeed;
 
+    public GameObject TurretHUD;
+
+
     public bool VR;
     public GameObject Rig;
     public GameObject PlayerCamer;
@@ -96,6 +99,8 @@ public class PlayerController : MonoBehaviour
         Turret.transform.Rotate(new Vector3(0f,turretRotSpeed * aiming.x * Time.deltaTime), Space.Self);
 
         Cannon.transform.Rotate(new Vector3(CannonRotSpeed * aiming.y * Time.deltaTime,0f,0f), Space.Self);
+
+        TurretHUD.transform.localEulerAngles = Turret.transform.localEulerAngles;
 
         joystick.transform.localEulerAngles = new Vector3(aiming.y * joyAngle, 0f, aiming.x * joyAngle * -1);
         throttle.transform.localPosition = new Vector3(originThrottle.x, originThrottle.y, originThrottle.z + throttleDist * drive);
