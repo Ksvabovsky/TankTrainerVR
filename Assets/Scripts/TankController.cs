@@ -47,7 +47,7 @@ public class TankController : MonoBehaviour
 
     private void Awake()
     {
-        input = InputReader.instance;
+        input = GetComponent<InputReader>();
         rb = GetComponent<Rigidbody>();
 
         Application.targetFrameRate = -1;
