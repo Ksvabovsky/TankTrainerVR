@@ -112,7 +112,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""82f3022e-e416-4dbd-974b-78a647fdb8e5"",
                     ""path"": ""<Joystick>/stick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""InvertVector2(invertX=false)"",
                     ""groups"": """",
                     ""action"": ""Aim"",
                     ""isComposite"": false,
