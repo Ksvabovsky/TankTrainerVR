@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class TankController : MonoBehaviour
 {
+    public static TankController instance;
 
     InputReader input;
 
@@ -51,6 +52,8 @@ public class TankController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         Application.targetFrameRate = -1;
+
+        instance = this;
     }
     void Start()
     {
