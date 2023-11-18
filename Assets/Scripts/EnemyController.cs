@@ -8,6 +8,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField] Transform bulletParent;
     [SerializeField] float bulletSpeed;
 
+    [SerializeField] EnemyManager enemyManager;
+    public GameObject square;
+    public GameObject direction;
+
     [SerializeField] Transform turret;
     [SerializeField] Transform cannon;
     [SerializeField] Transform firepoint;
@@ -26,7 +30,9 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = TankController.instance.transform;   
+        target = TankController.instance.transform;
+        enemyManager = EnemyManager.instance;
+        enemyManager.AddEnemy(this);
     }
 
     // Update is called once per frame
