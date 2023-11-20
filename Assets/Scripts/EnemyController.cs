@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     public GameObject square;
     public GameObject direction;
 
+    [SerializeField] bool isShooting;
     [SerializeField] Transform turret;
     [SerializeField] Transform cannon;
     [SerializeField] Transform firepoint;
@@ -53,6 +54,7 @@ public class EnemyController : MonoBehaviour
         {
             if(reloadValue <= 0f)
             {
+                if(isShooting)
                 Shoot();
             }
         }
