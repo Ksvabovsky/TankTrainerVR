@@ -4,62 +4,90 @@ using UnityEngine;
 
 public class GaugeController : MonoBehaviour
 {
-    [SerializeField] GaugeScript eng1rpm;
-    [SerializeField] GaugeScript eng1temp;
-    [SerializeField] GaugeScript eng1oil;
+    [SerializeField] GaugeScript rpm1G;
+    [SerializeField] GaugeScript temp1G;
+    [SerializeField] GaugeScript oil1G;
 
-    [SerializeField] GaugeScript eng2rpm;
-    [SerializeField] GaugeScript eng2temp;
-    [SerializeField] GaugeScript eng2oil;
+    [SerializeField] GaugeScript rpm2G;
+    [SerializeField] GaugeScript temp2G;
+    [SerializeField] GaugeScript oil2G;
 
-    [SerializeField] GaugeScript pressureG;
+    [SerializeField] GaugeScript pressG;
     [SerializeField] GaugeScript fuelG;
 
-    [SerializeField] float rpm1;
-    [SerializeField] float rpm2;
+    [SerializeField] float rpm1V;
+    [SerializeField] float rpm2V;
 
-    [SerializeField] float temp1;
-    [SerializeField] float temp2;
+    [SerializeField] float temp1V;
+    [SerializeField] float temp2V;
 
-    [SerializeField] float oil1;
-    [SerializeField] float oil2;
+    [SerializeField] float oil1V;
+    [SerializeField] float oil2V;
 
-    [SerializeField] float press;
-    [SerializeField] float fuel;
+    [SerializeField] float pressV;
+    [SerializeField] float fuelV;
+
+    [SerializeField] float rpm1T;
+    [SerializeField] float rpm2T;
+
+    [SerializeField] float temp1T;
+    [SerializeField] float temp2T;
+
+    [SerializeField] float oil1T;
+    [SerializeField] float oil2T;
+
+    [SerializeField] float pressT;
+    [SerializeField] float fuelT;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Startup(0.95f));
+        SetNumbers(vrpm1: 0.6f,vtemp1: 0.8f,voil1: 0.66f,vrpm2: 0.6f,vtemp2: 0.8f,voil2: 0.66f,vpress: 0.5f,vfuel: 0.9f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        eng1rpm?.updateValue(rpm1);
-        eng1temp?.updateValue(temp1);
-        eng1oil?.updateValue(oil1);
+        UpdateGauge(rpm1G, ref rpm1V, rpm1T);
+        UpdateGauge(temp1G, ref temp1V, temp1T);
+        UpdateGauge(oil1G, ref oil1V, oil1T);
 
-        eng2rpm?.updateValue(temp2);
-        eng2temp?.updateValue(temp2);
-        eng2oil?.updateValue(oil2);
+        UpdateGauge(rpm2G, ref rpm2V, rpm2T);
+        UpdateGauge(temp2G, ref temp2V, temp2T);
+        UpdateGauge(oil2G, ref oil2V, oil2T);
 
-        pressureG?.updateValue(press);
-        fuelG?.updateValue(fuel);
+        UpdateGauge(fuelG,ref fuelV ,fuelT);
+        UpdateGauge(pressG, ref pressV, pressT);
+        
     }
 
-    IEnumerator Startup(float rmp1)//,float temp1, float oil1, float rpm2,float temp2, float oil2, float press, float fuel)
+    void UpdateGauge(GaugeScript gauge, ref float value, float target)
     {
-        while(this.fuel <0.95f)
+        if (value != target)
         {
-            Debug.Log("chuj");
-            if(0.95f - this.fuel < 0.01)
+            value = Mathf.Lerp(value, target, Time.deltaTime);
+            if (target - value < 0.005)
             {
-                this.fuel = fuel; break;
+                value = target;
+                
             }
-            this.fuel = Mathf.Lerp(this.fuel, fuel, Time.deltaTime);
-            yield return null;
+            gauge.updateValue(value);
+            
         }
-        
+
+    }
+
+    public void SetNumbers(float vrpm1 = -1f,float vtemp1 = -1f, float voil1 = -1f, float vrpm2 = -1f, float vtemp2 = -1f, float voil2 = -1f, float vpress = -1f, float vfuel = -1f)
+    {
+        rpm1T = vrpm1 != -1 ? vrpm1 : rpm1T;
+        temp1T = vtemp1 != -1 ? vtemp1 : temp1T;
+        oil1T = voil1 != -1 ? voil1 : oil1T;
+
+        rpm2T = vrpm2 != -1 ? vrpm2 : rpm2T;
+        temp2T = vtemp2 != -1 ? vtemp2 : temp2T;
+        oil2T = voil2 != -1 ? voil2 : oil2T;
+
+        pressT = vpress != -1 ? vpress : pressT;
+        fuelT = vfuel != -1 ? vfuel : fuelT;
     }
 }

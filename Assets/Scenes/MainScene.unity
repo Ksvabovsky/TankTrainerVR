@@ -711,22 +711,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa98896d2455d44d882f4472fbcff99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eng1rpm: {fileID: 0}
-  eng1temp: {fileID: 0}
-  eng1oil: {fileID: 0}
-  eng2rpm: {fileID: 0}
-  eng2temp: {fileID: 0}
-  eng2oil: {fileID: 0}
-  pressureG: {fileID: 0}
+  rpm1G: {fileID: 2279256282897658851}
+  temp1G: {fileID: 7904987699457000695}
+  oil1G: {fileID: 7056318911350243133}
+  rpm2G: {fileID: 8164198115751057273}
+  temp2G: {fileID: 8640487487733468533}
+  oil2G: {fileID: 6651620589297009439}
+  pressG: {fileID: 9217697415389056397}
   fuelG: {fileID: 2563834428534869150}
-  rpm1: 0
-  rpm2: 0
-  temp1: 0
-  temp2: 0
-  oil1: 0
-  oil2: 0
-  press: 0
-  fuel: 0
+  rpm1V: 0
+  rpm2V: 0
+  temp1V: 0
+  temp2V: 0
+  oil1V: 0
+  oil2V: 0
+  pressV: 0
+  fuelV: 0
+  rpm1T: 0
+  rpm2T: 0
+  temp1T: 0
+  temp2T: 0
+  oil1T: 0
+  oil2T: 0
+  pressT: 0
+  fuelT: 0
 --- !u!1 &170504541
 GameObject:
   m_ObjectHideFlags: 0

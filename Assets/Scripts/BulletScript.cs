@@ -20,8 +20,8 @@ public class BulletScript : MonoBehaviour
         if(Physics.Raycast(ray, out hit, 10f, mask))
         {
             Debug.Log(hit.collider.gameObject.name);
-            BM = BulletManager.instance;
-            BM.hits.Add(hit.transform.position);
+            //BM = BulletManager.instance;
+            //BM.hits.Add(hit.transform.position);
             Collided();
         }
     }
