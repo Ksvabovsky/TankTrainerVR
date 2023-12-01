@@ -66,7 +66,23 @@ public class TankController : MonoBehaviour
     {
         Turret.transform.Rotate(new Vector3(0f, turretRotSpeed * input.GetAim().x * Time.deltaTime), Space.Self);
 
-        Cannon.transform.Rotate(new Vector3(CannonRotSpeed * input.GetAim().y * Time.deltaTime, 0f, 0f), Space.Self);
+            Cannon.transform.Rotate(new Vector3(CannonRotSpeed * input.GetAim().y * Time.deltaTime, 0f, 0f), Space.Self);
+            float rot = Cannon.transform.localEulerAngles.x;
+            if(rot > 180f)
+            {
+            rot = rot - 360f;
+            }
+            if ( rot > 9f)
+            {
+                Cannon.localEulerAngles = new Vector3(9f, 0f, 0f);
+                //Debug.Log(Cannon.localEulerAngles);
+            }
+            if( rot < -25f)
+            {
+                Cannon.localEulerAngles = new Vector3(-25f, 0f, 0f);
+                //Debug.Log(Cannon.localEulerAngles);
+            }
+
 
         for (int i = 0; i < 4; i++)
         {
