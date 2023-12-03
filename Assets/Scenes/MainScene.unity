@@ -857,7 +857,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176393594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1585,6 +1585,73 @@ MonoBehaviour:
   m_TrackingType: 0
   m_UpdateType: 0
   m_UseRelativeTransform: 0
+--- !u!1 &352549018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 352549019}
+  - component: {fileID: 352549021}
+  - component: {fileID: 352549020}
+  m_Layer: 0
+  m_Name: Hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &352549019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352549018}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 604496454}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &352549020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352549018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98c9a4a78fe2caa40ace3630525607df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthScript: {fileID: 604496458}
+--- !u!65 &352549021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352549018}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6793662, y: 0.98730135, z: 4.4751215}
+  m_Center: {x: 0.036603924, y: 0.16991654, z: -0.09864187}
 --- !u!1 &360957421
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,9 +2365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 604496454}
   - component: {fileID: 604496453}
-  - component: {fileID: 604496456}
   - component: {fileID: 604496458}
-  - component: {fileID: 604496457}
   m_Layer: 0
   m_Name: TOW_stryker (1)
   m_TagString: Untagged
@@ -2353,43 +2418,10 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1949251778}
+  - {fileID: 352549019}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 157.539, z: 0}
---- !u!65 &604496456
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604496452}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.6793662, y: 0.98730135, z: 4.4751215}
-  m_Center: {x: 0.036603924, y: 0.16991654, z: -0.09864187}
---- !u!114 &604496457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604496452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98c9a4a78fe2caa40ace3630525607df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthScript: {fileID: 604496458}
 --- !u!114 &604496458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3637,6 +3669,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield Bar Left
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 17ac82c205a5a1c438ece74a721e099f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4299,7 +4336,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -5639,7 +5676,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   startHP: 100
+  shield: 80
+  startShield: 80
   hpBarMaterial: {fileID: 2100000, guid: 1960db0b6bbba244e898232e104e3d41, type: 2}
+  shieldBarMaterial: {fileID: 2100000, guid: f7528b3cff7a9264ab3a7ac1772e7dbc, type: 2}
 --- !u!1 &1792083387
 GameObject:
   m_ObjectHideFlags: 0
@@ -5915,6 +5955,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shield Bar Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 17ac82c205a5a1c438ece74a721e099f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6574,6 +6619,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HP Bar Left
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 126f7fa7472e10a419f448a31026dd3f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6949,7 +6999,7 @@ GameObject:
   - component: {fileID: 6054683273712141082}
   - component: {fileID: 6249630362470197212}
   - component: {fileID: 5912126246350716175}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BarsUnlit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7829,7 +7879,7 @@ PrefabInstance:
     - target: {fileID: 2658349853298281032, guid: efd61db8e8adb254ab4412e1c15c5b9b,
         type: 3}
       propertyPath: mask.m_Bits
-      value: 128
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2738207986757723678, guid: efd61db8e8adb254ab4412e1c15c5b9b,
         type: 3}

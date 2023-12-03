@@ -162,7 +162,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   effect: {fileID: 0}
-  damage: 5
+  damage: 20
   BM: {fileID: 0}
 --- !u!136 &8021748830192593996
 CapsuleCollider:

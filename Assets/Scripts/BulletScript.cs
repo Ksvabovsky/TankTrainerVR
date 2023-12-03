@@ -32,14 +32,14 @@ public class BulletScript : MonoBehaviour
                 targetHealth.GetDamage(damage);
                 
             }
-            Destroy(this);
+           
             Collided();
         }
     }
 
     void Collided()
     {
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 
     private void OnDrawGizmos()

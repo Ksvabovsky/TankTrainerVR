@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8006605624900023632}
   - component: {fileID: 7026579809409974081}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 7482213155775436231}
   - component: {fileID: 4890158078285774814}
   - component: {fileID: 2658349853298281032}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 1541576951574194958}
   - component: {fileID: 5932073814712664859}
   - component: {fileID: 1813167998738609148}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
