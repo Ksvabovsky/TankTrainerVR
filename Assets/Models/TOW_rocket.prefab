@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4446389822146487168}
   - component: {fileID: 5907256232115557046}
   - component: {fileID: 554427083046429833}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,10 +92,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 947991847938232801}
-  - component: {fileID: 8070806896118643155}
   - component: {fileID: 2926913467871931563}
   - component: {fileID: 1939047804837153689}
-  m_Layer: 0
+  - component: {fileID: 8021748830192593996}
+  m_Layer: 9
   m_Name: TOW_rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,29 +119,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &8070806896118643155
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5282870871264564655}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Height: 0.65
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0.024423322}
 --- !u!54 &2926913467871931563
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -168,7 +145,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1939047804837153689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,9 +160,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 384
   effect: {fileID: 0}
+  damage: 5
   BM: {fileID: 0}
+--- !u!136 &8021748830192593996
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5282870871264564655}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Height: 0.7
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6751330967108280456
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +198,7 @@ GameObject:
   - component: {fileID: 7378665841067904223}
   - component: {fileID: 8019956768330554158}
   - component: {fileID: 8471820101101096588}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RocketOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}

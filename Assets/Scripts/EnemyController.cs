@@ -35,6 +35,7 @@ public class EnemyController : MonoBehaviour
         target = TankController.instance.transform;
         enemyManager = EnemyManager.instance;
         enemyManager.AddEnemy(this);
+        bulletParent = BulletManager.instance.transform;
     }
 
     // Update is called once per frame

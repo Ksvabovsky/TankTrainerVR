@@ -8,12 +8,17 @@ public class BulletManager : MonoBehaviour
 
     public static BulletManager instance;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
         foreach(var hit in hits)
         {
-            Gizmos.DrawSphere(hit, 0.5f);
+            Gizmos.DrawSphere(hit, 0.2f);
         }
     }
 }
