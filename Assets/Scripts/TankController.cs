@@ -46,6 +46,16 @@ public class TankController : MonoBehaviour
     private Vector3 throttleOrigin;
     [SerializeField] private float throttleDist;
 
+    [Header("Lock")]
+
+    [SerializeField] bool Locked;
+    Coroutine lockCoroutine;
+    [SerializeField] Material material;
+    //[SerializeField] AudioClip lockSound;
+    //[SerializeField] AudioClip newContact;
+    [SerializeField] AudioSource source;
+
+
     private void Awake()
     {
         input = GetComponent<InputReader>();
@@ -54,6 +64,8 @@ public class TankController : MonoBehaviour
         Application.targetFrameRate = -1;
 
         instance = this;
+
+        material.DisableKeyword("_EMISSION");
     }
     void Start()
     {
@@ -135,6 +147,60 @@ public class TankController : MonoBehaviour
             Physics.Raycast(anchors[i].position, -anchors[i].up, out hit);
             Gizmos.DrawSphere(hit.point, 0.2f);
             Gizmos.DrawLine(anchors[i].position, hit.point);
+        }
+    }
+
+    public void PlayerLocked()
+    {
+        if (!Locked)
+        {
+            Locked = true;
+            if (lockCoroutine == null)
+            {
+                lockCoroutine = StartCoroutine(LockSound());
+                material.EnableKeyword("_EMISSION");
+            }
+        }
+    }
+
+    public void PlayerUnlocked()
+    {
+        if (Locked)
+        {
+            Locked = false;
+            if (lockCoroutine != null)
+            {
+                StopCoroutine(lockCoroutine);
+                lockCoroutine = null;
+                material.DisableKeyword("_EMISSION");
+            }
+        }
+    }
+
+    public bool IsLocked()
+    {
+        return Locked;
+    }
+
+    IEnumerator LockSound() {
+
+        //source.Play();
+        //yield return new WaitForSeconds(0.25f);
+        //material.DisableKeyword("_EMISSION");
+        //yield return new WaitForSeconds(0.25f);
+        //material.EnableKeyword("_EMISSION");
+        //yield return new WaitForSeconds(0.25f);
+        //material.DisableKeyword("_EMISSION");
+        //yield return new WaitForSeconds(0.25f);
+        //material.EnableKeyword("_EMISSION");
+        //yield return new WaitForSeconds(2f);
+
+        //source.clip = lockSound;
+        while (true)
+        {
+            
+            source.Play();
+            yield return new WaitForSeconds(3f);
         }
     }
 }

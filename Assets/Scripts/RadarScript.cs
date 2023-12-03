@@ -6,6 +6,7 @@ using UnityEngine;
 public class RadarScript : MonoBehaviour
 {
     [SerializeField] Transform player;
+    [SerializeField] TankController playerController;
     [SerializeField] EnemyManager enemyManager;
 
     [SerializeField] Transform PlayerTriangle;
@@ -19,15 +20,23 @@ public class RadarScript : MonoBehaviour
     void Start()
     {
         player = TankController.instance.transform;
+        playerController = TankController.instance;
         enemyManager = EnemyManager.instance;
     }
 
     // Update is called once per frame
     void Update()
     {
+        bool isLocked = false;
+
         enemies = enemyManager.GetEnemies();
         foreach(EnemyController enemy in enemies)
         {
+            if (enemy.isPlayerLocked())
+            {
+                isLocked = true;
+            }
+
             float distance = Vector3.Distance(player.transform.position, enemy.transform.position);
             if(distance < maxDist) {
                 if (enemy.square == null)
@@ -55,5 +64,16 @@ public class RadarScript : MonoBehaviour
 
         }
         PlayerTriangle.localEulerAngles = new Vector3(0f, player.eulerAngles.y, 0f);
+
+        if (isLocked)
+        {
+            playerController.PlayerLocked();
+        }
+        else
+        {
+            playerController.PlayerUnlocked();
+        }
     }
+
+    
 }

@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     public GameObject direction;
 
     [SerializeField] bool isShooting;
+    [SerializeField] bool playerInRange;
     [SerializeField] Transform turret;
     [SerializeField] Transform cannon;
     [SerializeField] Transform firepoint;
@@ -52,10 +53,18 @@ public class EnemyController : MonoBehaviour
 
         if(distance < shootingDistance)
         {
+            playerInRange = true;
             if(reloadValue <= 0f)
             {
                 if(isShooting)
                 Shoot();
+            }
+        }
+        else
+        {
+            if(playerInRange)
+            {
+                playerInRange = false;
             }
         }
 
@@ -71,9 +80,20 @@ public class EnemyController : MonoBehaviour
         reloadValue = reloadTime;
     }
 
+    public bool isPlayerLocked()
+    {
+        return playerInRange;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(targetOffset, 0.5f);
+        
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(this.transform.position, shootingDistance);
     }
 }
