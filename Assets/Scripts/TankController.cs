@@ -8,6 +8,7 @@ public class TankController : MonoBehaviour
 {
     public static TankController instance;
 
+
     InputReader input;
 
     Rigidbody rb;
@@ -35,6 +36,11 @@ public class TankController : MonoBehaviour
     [SerializeField] private GameObject BulletPrefab;
     [Space(10)]
     [SerializeField] private Transform TurretHUD;
+    [Space(10)]
+    [SerializeField] private Camera TurretCam;
+    [SerializeField] private bool zoomed;
+    [SerializeField] private float defaultFOV;
+    [SerializeField] private float zoomFOV;
 
     [Header("ControlsVis")]
 
@@ -70,6 +76,7 @@ public class TankController : MonoBehaviour
     void Start()
     {
         input.TriggerAction += Shoot;
+        input.ZoomAction += Zoom;
         throttleOrigin = throttle.localPosition;
     }
 
@@ -134,6 +141,20 @@ public class TankController : MonoBehaviour
         GameObject bullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
         Rigidbody rigidbody = bullet.GetComponent<Rigidbody>();
         rigidbody.velocity = Barrel.transform.forward * 200;
+    }
+
+    void Zoom()
+    {
+        if(zoomed)
+        {
+            TurretCam.fieldOfView = defaultFOV;
+            zoomed = false;
+        }
+        else
+        {
+            TurretCam.fieldOfView = zoomFOV;
+            zoomed = true;
+        }
     }
 
     private void OnDrawGizmos()

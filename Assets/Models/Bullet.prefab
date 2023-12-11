@@ -254,9 +254,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mask:
     serializedVersion: 2
-    m_Bits: 0
-  effect: {fileID: 0}
-  damage: 1
+    m_Bits: 32768
+  effect: {fileID: 8740185173418341361, guid: cd7bb20f8e39c1a49b8f7544b2751840, type: 3}
+  damage: 5
   BM: {fileID: 0}
 --- !u!1 &8629155463907360369
 GameObject:

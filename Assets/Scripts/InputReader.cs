@@ -11,6 +11,7 @@ public class InputReader : MonoBehaviour, PlayerInputs.ITankControlActions
     public static InputReader instance { get; private set; }
 
     public Action TriggerAction;
+    public Action ZoomAction;
 
     [SerializeField] private float drive;
 
@@ -34,6 +35,14 @@ public class InputReader : MonoBehaviour, PlayerInputs.ITankControlActions
         if (TriggerAction != null && context.performed)
         {
             TriggerAction.Invoke();
+        }
+    }
+
+    public void OnZoom(InputAction.CallbackContext context)
+    {
+        if (ZoomAction != null && context.performed)
+        {
+            ZoomAction.Invoke();
         }
     }
     public void OnAim(InputAction.CallbackContext context)

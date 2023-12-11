@@ -22,6 +22,7 @@ public class PlayerHealthScript : HealthScript, IHealth
         hp = startHP;
         hpBarMaterial.SetFloat("_FillRate", 0.18f * (hp / startHP));
         shieldBarMaterial.SetFloat("_FillRate", 0.12f * (shield / startShield));
+        shieldBarMaterial.SetFloat("_Alpha", 1f);
     }
 
     public override float GetHealth()
@@ -96,19 +97,20 @@ public class PlayerHealthScript : HealthScript, IHealth
         {
             
 
-            for(float j = 0;j<1;j += Time.deltaTime *2)
+            for(float j = 0;j<1;j += Time.deltaTime *4)
             {
                 shieldBarMaterial.SetFloat("_Alpha", j);
                 yield return null;
             }
-            yield return new WaitForSeconds(0.2f);
+            shieldBarMaterial.SetFloat("_Alpha", 1f);
+            yield return new WaitForSeconds(0.05f);
 
-            for (float j = 1; j >0; j -= Time.deltaTime *2)
+            for (float j = 1; j >0; j -= Time.deltaTime *4)
             {
                 shieldBarMaterial.SetFloat("_Alpha", j);
                 yield return null;
             }
-
+            shieldBarMaterial.SetFloat("_Alpha", 0);
             yield return new WaitForSeconds(1);
 
         }

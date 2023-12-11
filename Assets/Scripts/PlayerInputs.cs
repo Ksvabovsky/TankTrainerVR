@@ -37,6 +37,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Button"",
+                    ""id"": ""d082efb0-8235-4f16-8b4e-774e83507c66"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Aim"",
                     ""type"": ""Value"",
                     ""id"": ""52f2d188-40a4-446d-9bcd-c62fbe02b7e7"",
@@ -296,7 +305,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""629b9b63-7819-4661-babe-82093ed2df34"",
+                    ""id"": ""eec54e13-f2eb-4772-897b-6c113e3030dc"",
                     ""path"": ""<HID::Thrustmaster T.Flight Hotas X>/slider"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -370,6 +379,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Strafe"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc3b1c7b-1bd6-43ff-b11c-e6ea77dff8e1"",
+                    ""path"": ""<HID::Thrustmaster T.Flight Hotas X>/button4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -379,6 +399,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         // TankControl
         m_TankControl = asset.FindActionMap("TankControl", throwIfNotFound: true);
         m_TankControl_Trigger = m_TankControl.FindAction("Trigger", throwIfNotFound: true);
+        m_TankControl_Zoom = m_TankControl.FindAction("Zoom", throwIfNotFound: true);
         m_TankControl_Aim = m_TankControl.FindAction("Aim", throwIfNotFound: true);
         m_TankControl_Drive = m_TankControl.FindAction("Drive", throwIfNotFound: true);
         m_TankControl_Turn = m_TankControl.FindAction("Turn", throwIfNotFound: true);
@@ -445,6 +466,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_TankControl;
     private List<ITankControlActions> m_TankControlActionsCallbackInterfaces = new List<ITankControlActions>();
     private readonly InputAction m_TankControl_Trigger;
+    private readonly InputAction m_TankControl_Zoom;
     private readonly InputAction m_TankControl_Aim;
     private readonly InputAction m_TankControl_Drive;
     private readonly InputAction m_TankControl_Turn;
@@ -454,6 +476,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         private @PlayerInputs m_Wrapper;
         public TankControlActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Trigger => m_Wrapper.m_TankControl_Trigger;
+        public InputAction @Zoom => m_Wrapper.m_TankControl_Zoom;
         public InputAction @Aim => m_Wrapper.m_TankControl_Aim;
         public InputAction @Drive => m_Wrapper.m_TankControl_Drive;
         public InputAction @Turn => m_Wrapper.m_TankControl_Turn;
@@ -470,6 +493,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Trigger.started += instance.OnTrigger;
             @Trigger.performed += instance.OnTrigger;
             @Trigger.canceled += instance.OnTrigger;
+            @Zoom.started += instance.OnZoom;
+            @Zoom.performed += instance.OnZoom;
+            @Zoom.canceled += instance.OnZoom;
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
@@ -489,6 +515,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Trigger.started -= instance.OnTrigger;
             @Trigger.performed -= instance.OnTrigger;
             @Trigger.canceled -= instance.OnTrigger;
+            @Zoom.started -= instance.OnZoom;
+            @Zoom.performed -= instance.OnZoom;
+            @Zoom.canceled -= instance.OnZoom;
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
@@ -521,6 +550,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     public interface ITankControlActions
     {
         void OnTrigger(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnDrive(InputAction.CallbackContext context);
         void OnTurn(InputAction.CallbackContext context);
