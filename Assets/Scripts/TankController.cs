@@ -171,6 +171,11 @@ public class TankController : MonoBehaviour
         }
     }
 
+    public float GetSpeed()
+    {
+        return rb.velocity.magnitude;
+    }
+
     public void PlayerLocked()
     {
         if (!Locked)
@@ -224,4 +229,5 @@ public class TankController : MonoBehaviour
             yield return new WaitForSeconds(3f);
         }
     }
+
 }

@@ -107,11 +107,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: RenderObjects
+  m_Name: HoloSight
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: RenderObjects
+    passTag: HoloSight
     Event: 450
     filterSettings:
       RenderQueueType: 1
@@ -130,7 +130,7 @@ MonoBehaviour:
     stencilSettings:
       overrideStencilState: 1
       stencilReference: 2
-      stencilCompareFunction: 3
+      stencilCompareFunction: 4
       passOperation: 0
       failOperation: 0
       zFailOperation: 0

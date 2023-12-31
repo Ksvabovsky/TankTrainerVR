@@ -30,6 +30,17 @@ public class PlayerHealthScript : HealthScript, IHealth
         return hp;
     }
 
+    public float GetHealthPercent()
+    {
+        return hp/startHP;
+    }
+
+    public float GetShieldPercent()
+    {
+        return shield/startShield;
+    }
+
+
     public override void SetHealth(float value)
     {
         hp = value;

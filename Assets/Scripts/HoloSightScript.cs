@@ -1,9 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HoloSightScript : MonoBehaviour
 {
+    
+     private TankController player;
+     private Transform playerTransform;
+     private PlayerHealthScript playerHP;
+
+    [Header("UI Elements")]
+    [SerializeField] TMP_Text hullText;
+    [SerializeField] TMP_Text shieldText;
+    [SerializeField] TMP_Text speedText;
 
     [SerializeField]
     private Transform headsetTransform;
@@ -14,6 +24,8 @@ public class HoloSightScript : MonoBehaviour
     [SerializeField]
     private Transform uiTransform;
 
+    [SerializeField] bool moveUI;
+
     [SerializeField]
     private Vector3 focusPoint;
     [SerializeField]
@@ -23,20 +35,33 @@ public class HoloSightScript : MonoBehaviour
 
     private Vector3 uiStartScale;
 
-    [SerializeField] float viewA;
-    [SerializeField] float viewB;
-    [SerializeField] float viewC;
+    float viewA;
+    float viewB;
+    float viewC;
     
-    [SerializeField] float uiA;
-    [SerializeField] float uiB;
-    [SerializeField] float uiC;
+    float uiA;
+    float uiB;
+    float uiC;
 
-    [SerializeField] float viewZ;
-    [SerializeField] float uiS;
+    float viewZ;
+    float uiS;
 
-    [SerializeField] Vector3 head;
-    [SerializeField] Vector3 view;
+    Vector3 head;
+    Vector3 view;
 
+    [Header("Compass")]
+
+    [SerializeField] Material compassMat;
+    [SerializeField] float playerDirection;
+    [SerializeField] float compassOffsetValue;
+
+
+    private void Awake()
+    {
+        player = TankController.instance;
+        playerTransform = player.transform;
+        playerHP = player.GetComponent<PlayerHealthScript>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +75,7 @@ public class HoloSightScript : MonoBehaviour
         head = headsetTransform.position;
         view = viewTransform.position;
 
+        
 
         viewTransform.position = headsetTransform.position;
 
@@ -72,10 +98,30 @@ public class HoloSightScript : MonoBehaviour
 
         scaleProportion = viewZ / viewStartPoint.z;
 
+        if(moveUI) {
+
         uiTransform.localScale = new Vector3(scaleProportion, scaleProportion, scaleProportion) * 0.001f;
 
         uiTransform.localPosition = uiStartPoint + new Vector3(uiB, uiC, 0f);
+        }
 
+        playerDirection = playerTransform.rotation.eulerAngles.y;
+
+        if(playerDirection > 180f)
+        {
+            playerDirection -= 360f;
+        }
+
+        hullText.text = "HULL\n" + playerHP.GetHealthPercent() * 1000f / 10f + "%";
+        shieldText.text = "SHIELD\n" + playerHP.GetShieldPercent() * 1000f / 10f + "%";
+        speedText.text = "SPEED\n" +  Mathf.Round(player.GetSpeed() * 3600f / 1000f) + "KPH";
+
+
+        compassOffsetValue = playerDirection / 360f;
+
+
+        compassMat.SetTextureOffset("_BaseMap",new Vector2(compassOffsetValue, 0));
+        compassMat.SetTextureOffset("_EmissionMap", new Vector2(compassOffsetValue, 0));
     }
 
 }
