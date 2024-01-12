@@ -11,27 +11,28 @@ public class HoloSightScript : MonoBehaviour
      private PlayerHealthScript playerHP;
 
     [Header("UI Elements")]
-    [SerializeField] TMP_Text hullText;
-    [SerializeField] TMP_Text shieldText;
-    [SerializeField] TMP_Text speedText;
 
-    [SerializeField]
-    private Transform headsetTransform;
-    [SerializeField]
-    private Transform viewTransform;
-    [SerializeField]
-    private Transform sightTransform;
-    [SerializeField]
-    private Transform uiTransform;
+    [SerializeField] private GameObject HUD;
+    [SerializeField] private TMP_Text hullText;
+    [SerializeField] private TMP_Text shieldText;
+    [SerializeField] private TMP_Text speedText;
+
+    [Space(10)]
+
+    [SerializeField] private GameObject Menu;
+
+    [Space(15)]
+
+    [SerializeField] private Transform headsetTransform;
+    [SerializeField] private Transform viewTransform;
+    [SerializeField] private Transform sightTransform;
+    [SerializeField] private Transform uiTransform;
 
     [SerializeField] bool moveUI;
 
-    [SerializeField]
-    private Vector3 focusPoint;
-    [SerializeField]
-    private Vector3 uiStartPoint;
-    [SerializeField]
-    private Vector3 viewStartPoint;
+    [SerializeField] private Vector3 focusPoint;
+    [SerializeField] private Vector3 uiStartPoint;
+    [SerializeField] private Vector3 viewStartPoint;
 
     private Vector3 uiStartScale;
 
@@ -105,23 +106,53 @@ public class HoloSightScript : MonoBehaviour
         uiTransform.localPosition = uiStartPoint + new Vector3(uiB, uiC, 0f);
         }
 
+
+        if (player.IsActive())
+        {
+            UpdateHUD();
+        }
+        
+    }
+
+
+    void UpdateHUD()
+    {
         playerDirection = playerTransform.rotation.eulerAngles.y;
 
-        if(playerDirection > 180f)
+        if (playerDirection > 180f)
         {
             playerDirection -= 360f;
         }
 
         hullText.text = "HULL\n" + playerHP.GetHealthPercent() * 1000f / 10f + "%";
         shieldText.text = "SHIELD\n" + playerHP.GetShieldPercent() * 1000f / 10f + "%";
-        speedText.text = "SPEED\n" +  Mathf.Round(player.GetSpeed() * 3600f / 1000f) + "KPH";
+        speedText.text = "SPEED\n" + Mathf.Round(player.GetSpeed() * 3600f / 1000f) + "KPH";
 
 
         compassOffsetValue = playerDirection / 360f;
 
 
-        compassMat.SetTextureOffset("_BaseMap",new Vector2(compassOffsetValue, 0));
+        compassMat.SetTextureOffset("_BaseMap", new Vector2(compassOffsetValue, 0));
         compassMat.SetTextureOffset("_EmissionMap", new Vector2(compassOffsetValue, 0));
+    }
+
+    public void StartMission()
+    {
+        Debug.Log("dupa");
+        player.StartTank();
+        ChangeMenuToHud();
+    }
+
+    void ChangeMenuToHud()
+    {
+        Menu.SetActive(false);
+        HUD.SetActive(true);
+    }
+
+    void ChangeHUDToMenu()
+    {
+        HUD.SetActive(false);
+        Menu.SetActive(true);
     }
 
 }

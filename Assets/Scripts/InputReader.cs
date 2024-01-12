@@ -27,8 +27,21 @@ public class InputReader : MonoBehaviour, PlayerInputs.ITankControlActions
 
         input = new PlayerInputs();
         input.TankControl.SetCallbacks(this);
-        input.Enable();
+        
     }
+
+    public void ChangeToUI()
+    {
+        input.TankControl.Disable();
+        input.UI.Enable();
+    }
+
+    public void ChangeToTank()
+    {
+        input.UI.Disable();
+        input.TankControl.Enable();
+    }
+
 
     public void OnTrigger(InputAction.CallbackContext context)
     {

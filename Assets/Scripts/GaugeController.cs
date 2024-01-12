@@ -40,7 +40,7 @@ public class GaugeController : MonoBehaviour
     [SerializeField] float fuelT;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         SetNumbers(vrpm1: 0.6f,vtemp1: 0.8f,voil1: 0.66f,vrpm2: 0.6f,vtemp2: 0.8f,voil2: 0.66f,vpress: 0.5f,vfuel: 0.9f);
     }

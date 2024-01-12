@@ -8,6 +8,7 @@ public class TankController : MonoBehaviour
 {
     public static TankController instance;
 
+    bool active;
 
     InputReader input;
 
@@ -51,6 +52,9 @@ public class TankController : MonoBehaviour
     [SerializeField] private Transform throttle;
     private Vector3 throttleOrigin;
     [SerializeField] private float throttleDist;
+    [Space(10)]
+    [SerializeField] private GaugeController gauges;
+
 
     [Header("Lock")]
 
@@ -78,6 +82,8 @@ public class TankController : MonoBehaviour
         input.TriggerAction += Shoot;
         input.ZoomAction += Zoom;
         throttleOrigin = throttle.localPosition;
+
+        active = false;
     }
 
     // Update is called once per frame
@@ -175,6 +181,21 @@ public class TankController : MonoBehaviour
     {
         return rb.velocity.magnitude;
     }
+
+    public bool IsActive()
+    {
+        return active;
+    }
+
+    public void StartTank(){ 
+        active = true;
+        gauges.enabled = true;
+
+        Debug.Log("chuj");
+
+        input.ChangeToTank();
+    }
+
 
     public void PlayerLocked()
     {
