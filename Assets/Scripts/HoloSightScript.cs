@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class HoloSightScript : MonoBehaviour
 {
@@ -20,9 +22,19 @@ public class HoloSightScript : MonoBehaviour
     [Space(10)]
 
     [SerializeField] private GameObject Menu;
+    [SerializeField] private GameObject menuFirstButton;
+
+    [Space(10)]
+
+    [SerializeField] private GameObject adjustMenu;
+    [SerializeField] private float adjustValue;
+    [SerializeField] private TMP_Text heightText;
+    [SerializeField] private float heightValue;
+    [SerializeField] private GameObject adjustFirstButton;
 
     [Space(15)]
 
+    [SerializeField] private Transform XRrig;
     [SerializeField] private Transform headsetTransform;
     [SerializeField] private Transform viewTransform;
     [SerializeField] private Transform sightTransform;
@@ -143,16 +155,45 @@ public class HoloSightScript : MonoBehaviour
         ChangeMenuToHud();
     }
 
-    void ChangeMenuToHud()
+    public void ChangeMenuToHud()
     {
         Menu.SetActive(false);
         HUD.SetActive(true);
     }
 
-    void ChangeHUDToMenu()
+    public void ChangeHUDToMenu()
     {
         HUD.SetActive(false);
         Menu.SetActive(true);
     }
 
+    public void ChangeMenuToAdjust()
+    {
+        Menu.SetActive(false);
+        adjustMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(adjustFirstButton);
+    }
+
+    public void ChangeAdjustToMenu()
+    {
+        adjustMenu.SetActive(false);
+        Menu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(menuFirstButton);
+    }
+
+    public void MoveUpSeat()
+    {
+        XRrig.Translate(0f, adjustValue, 0f);
+        heightValue += adjustValue;
+        heightText.text = heightValue.ToString();
+        
+    }
+
+    public void MoveDownSeat()
+    {
+        XRrig.Translate(0f, -adjustValue, 0f);
+        heightValue -= adjustValue;
+        heightText.text = heightValue.ToString();
+    }
 }
