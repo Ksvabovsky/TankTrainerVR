@@ -12,6 +12,9 @@ public class TankController : MonoBehaviour
 
     InputReader input;
 
+    TankTurretController turretScript;
+    
+
     Rigidbody rb;
 
     [Header("HoverPhysics")]
@@ -25,23 +28,7 @@ public class TankController : MonoBehaviour
     [SerializeField] private float multiplier;
     [SerializeField] private float moveForce, turnTorque;
 
-    [Header("Turret")]
-
-    [SerializeField] private Transform Turret;
-    [SerializeField] private float turretRotSpeed;
-    [Space(10)]
-    [SerializeField] private Transform Cannon;
-    [SerializeField] private float CannonRotSpeed;
-    [Space(10)]
-    [SerializeField] private Transform Barrel;
-    [SerializeField] private GameObject BulletPrefab;
-    [Space(10)]
-    [SerializeField] private Transform TurretHUD;
-    [Space(10)]
-    [SerializeField] private Camera TurretCam;
-    [SerializeField] private bool zoomed;
-    [SerializeField] private float defaultFOV;
-    [SerializeField] private float zoomFOV;
+    
 
     [Header("ControlsVis")]
 
@@ -54,9 +41,11 @@ public class TankController : MonoBehaviour
     [SerializeField] private float throttleDist;
     [Space(10)]
     [SerializeField] private GaugeController gauges;
+    [Space(10)]
+    [SerializeField] RadarScript radarScript;
 
 
-    [Header("Lock")]
+    [Header("PlayerLock")]
 
     [SerializeField] bool Locked;
     Coroutine lockCoroutine;
@@ -65,11 +54,20 @@ public class TankController : MonoBehaviour
     //[SerializeField] AudioClip newContact;
     [SerializeField] AudioSource source;
 
+    [Header("TankStart")]
+
+    [SerializeField] AnimationClip screensOff;
+    [SerializeField] AnimationClip screendOn;
+    [SerializeField] Animation startAnim;
+    [SerializeField] AudioSource EngineAudio;
+
+
 
     private void Awake()
     {
         input = GetComponent<InputReader>();
         rb = GetComponent<Rigidbody>();
+        turretScript = GetComponent<TankTurretController>();
 
         Application.targetFrameRate = -1;
 
@@ -79,9 +77,10 @@ public class TankController : MonoBehaviour
     }
     void Start()
     {
-        input.TriggerAction += Shoot;
-        input.ZoomAction += Zoom;
         throttleOrigin = throttle.localPosition;
+        startAnim.Play("ScreensOFF");
+        rb.constraints = RigidbodyConstraints.FreezePosition;
+        radarScript.enabled = false;
 
         active = false;
     }
@@ -89,24 +88,7 @@ public class TankController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Turret.transform.Rotate(new Vector3(0f, turretRotSpeed * input.GetAim().x * Time.deltaTime), Space.Self);
-
-            Cannon.transform.Rotate(new Vector3(CannonRotSpeed * input.GetAim().y * Time.deltaTime, 0f, 0f), Space.Self);
-            float rot = Cannon.transform.localEulerAngles.x;
-            if(rot > 180f)
-            {
-            rot = rot - 360f;
-            }
-            if ( rot > 9f)
-            {
-                Cannon.localEulerAngles = new Vector3(9f, 0f, 0f);
-                //Debug.Log(Cannon.localEulerAngles);
-            }
-            if( rot < -25f)
-            {
-                Cannon.localEulerAngles = new Vector3(-25f, 0f, 0f);
-                //Debug.Log(Cannon.localEulerAngles);
-            }
+        
 
 
         for (int i = 0; i < 4; i++)
@@ -121,8 +103,7 @@ public class TankController : MonoBehaviour
 
     private void Update()
     {
-        if (TurretHUD)
-            TurretHUD.transform.localEulerAngles = Turret.transform.localEulerAngles;
+       
 
         if (joystick)
             joystick.transform.localEulerAngles = new Vector3(input.GetAim().y * joyAngle, 0f, input.GetAim().x * joyAngle * -1);
@@ -142,26 +123,9 @@ public class TankController : MonoBehaviour
         }
     }
 
-    void Shoot()
-    {
-        GameObject bullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
-        Rigidbody rigidbody = bullet.GetComponent<Rigidbody>();
-        rigidbody.velocity = Barrel.transform.forward * 200;
-    }
+    
 
-    void Zoom()
-    {
-        if(zoomed)
-        {
-            TurretCam.fieldOfView = defaultFOV;
-            zoomed = false;
-        }
-        else
-        {
-            TurretCam.fieldOfView = zoomFOV;
-            zoomed = true;
-        }
-    }
+    
 
     private void OnDrawGizmos()
     {
@@ -189,11 +153,17 @@ public class TankController : MonoBehaviour
 
     public void StartTank(){ 
         active = true;
-        gauges.enabled = true;
+        rb.constraints = RigidbodyConstraints.None;
+        //gauges.enabled = true;
+        turretScript.enabled = true;
+        
+        startAnim.Play("ScreensOn");
+        EngineAudio.Play();
 
         Debug.Log("chuj");
 
         input.ChangeToTank();
+
     }
 
 

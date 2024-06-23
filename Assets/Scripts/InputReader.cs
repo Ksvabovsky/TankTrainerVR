@@ -12,6 +12,8 @@ public class InputReader : MonoBehaviour, PlayerInputs.ITankControlActions
 
     public Action TriggerAction;
     public Action ZoomAction;
+    public Action LockAction;
+    public Action ReleaseLockAction;
 
     [SerializeField] private float drive;
 
@@ -58,6 +60,19 @@ public class InputReader : MonoBehaviour, PlayerInputs.ITankControlActions
             ZoomAction.Invoke();
         }
     }
+    public void OnLock(InputAction.CallbackContext context)
+    {
+        if(LockAction != null && context.performed)
+        { 
+            LockAction.Invoke(); 
+        }
+
+        if (ReleaseLockAction != null && context.canceled)
+        {
+            ReleaseLockAction.Invoke();
+        }
+    }
+
     public void OnAim(InputAction.CallbackContext context)
     {
         aim = input.TankControl.Aim.ReadValue<Vector2>();
