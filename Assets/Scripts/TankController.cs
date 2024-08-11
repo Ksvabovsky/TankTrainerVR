@@ -160,7 +160,7 @@ public class TankController : MonoBehaviour
         startAnim.Play("ScreensOn");
         EngineAudio.Play();
 
-        Debug.Log("chuj");
+        Debug.Log("c");
 
         input.ChangeToTank();
 

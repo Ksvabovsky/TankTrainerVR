@@ -150,7 +150,7 @@ public class HoloSightScript : MonoBehaviour
 
     public void StartMission()
     {
-        Debug.Log("dupa");
+        Debug.Log("start");
         player.StartTank();
         ChangeMenuToHud();
     }

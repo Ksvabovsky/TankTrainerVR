@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class HitboxPointer : MonoBehaviour
 {
+    [SerializeReference] private GameObject mainParent;
     [SerializeReference] private HealthScript healthScript;
 
     public IHealth GetHealthComp()
     {
         return healthScript;
     }
+
+    public GameObject GetMainGameObject()
+    {
+        return mainParent;
+    }
+
+
 }
