@@ -97,4 +97,10 @@ public class EnemyController : MonoBehaviour
     {
         Gizmos.DrawWireSphere(this.transform.position, shootingDistance);
     }
+
+    public void MissonOver()
+    {
+        Debug.Log("Roger, Stop");
+        this.enabled = false;
+    }
 }

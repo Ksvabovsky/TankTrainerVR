@@ -32,6 +32,16 @@ public class HoloSightScript : MonoBehaviour
     [SerializeField] private float heightValue;
     [SerializeField] private GameObject adjustFirstButton;
 
+    [Space(10)]
+
+    [SerializeField] private GameObject Completed;
+    [SerializeField] private GameObject CompletedFirstButton;
+
+    [Space(10)]
+
+    [SerializeField] private GameObject Over;
+    [SerializeField] private GameObject OverFirstButton;
+
     [Space(15)]
 
     [SerializeField] private Transform XRrig;
@@ -137,7 +147,16 @@ public class HoloSightScript : MonoBehaviour
         }
 
         hullText.text = "HULL\n" + playerHP.GetHealthPercent() * 1000f / 10f + "%";
-        shieldText.text = "SHIELD\n" + playerHP.GetShieldPercent() * 1000f / 10f + "%";
+        float shield = playerHP.GetShieldPercent();
+        if (shield > 0f)
+        {
+            shieldText.text = "SHIELD\n" + shield *1000f / 10f + "%";
+        }
+        else
+        {
+            shieldText.text = "SHIELD\n" + "RECHARGING";
+        }
+        
         speedText.text = "SPEED\n" + Mathf.Round(player.GetSpeed() * 3600f / 1000f) + "KPH";
 
 
@@ -148,12 +167,22 @@ public class HoloSightScript : MonoBehaviour
         compassMat.SetTextureOffset("_EmissionMap", new Vector2(compassOffsetValue, 0));
     }
 
-    public void StartMission()
+    public void MissionStart()
     {
         Debug.Log("start");
         player.StartTank();
         ChangeMenuToHud();
     }
+
+    public void MissionCompleted()
+    {
+
+    }
+
+    public void MissionOver()
+    {
+        ChangeHUDToOver();
+    } 
 
     public void ChangeMenuToHud()
     {
@@ -180,6 +209,21 @@ public class HoloSightScript : MonoBehaviour
         adjustMenu.SetActive(false);
         Menu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(menuFirstButton);
+    }
+
+    public void ChangeHUDToCompleted()
+    {
+        HUD.SetActive(false);
+        Completed.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(CompletedFirstButton);
+    }
+
+    public void ChangeHUDToOver()
+    {
+        HUD.SetActive(false );
+        Over.SetActive(true );
+        EventSystem.current.SetSelectedGameObject(OverFirstButton);
+
     }
 
     public void MoveUpSeat()

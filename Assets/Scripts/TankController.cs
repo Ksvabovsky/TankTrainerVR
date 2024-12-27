@@ -13,6 +13,7 @@ public class TankController : MonoBehaviour
     InputReader input;
 
     TankTurretController turretScript;
+    [SerializeField] HoloSightScript HUDController;
     
 
     Rigidbody rb;
@@ -59,7 +60,14 @@ public class TankController : MonoBehaviour
     [SerializeField] AnimationClip screensOff;
     [SerializeField] AnimationClip screendOn;
     [SerializeField] Animation startAnim;
+
+    [SerializeField] AnimationClip glassUncover;
+    [SerializeField] AnimationClip glassCover;
+    [SerializeField] Animation glassAnim;
+
     [SerializeField] AudioSource EngineAudio;
+    [SerializeField] AudioSource UIAudio;
+    [SerializeField] AudioClip clickAudio;
 
 
 
@@ -151,18 +159,34 @@ public class TankController : MonoBehaviour
         return active;
     }
 
-    public void StartTank(){ 
+    public void StartTank()
+    {
+        GameStateManager.instance.GameStarted();  
         active = true;
         rb.constraints = RigidbodyConstraints.None;
         //gauges.enabled = true;
         turretScript.enabled = true;
         
         startAnim.Play("ScreensOn");
+        glassAnim.Play("Hello World");
         EngineAudio.Play();
 
-        Debug.Log("c");
-
         input.ChangeToTank();
+
+    }
+
+    public void TankLost()
+    {
+        GameStateManager.instance.GameOver();
+        active = false;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        turretScript.enabled = false;
+        startAnim.Play("ScreensOFF");
+        glassAnim.Play("CoverGlass");
+        EngineAudio.Stop();
+
+        HUDController.MissionOver();
+        input.ChangeToUI();
 
     }
 
@@ -219,6 +243,12 @@ public class TankController : MonoBehaviour
             source.Play();
             yield return new WaitForSeconds(3f);
         }
+    }
+
+    public void PlayClick()
+    {
+        UIAudio.PlayOneShot(clickAudio);
+        Debug.Log("chujaudio");
     }
 
 }

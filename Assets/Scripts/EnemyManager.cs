@@ -23,4 +23,13 @@ public class EnemyManager : MonoBehaviour
     {
         return enemies;
     }
+
+    public void MissionOver()
+    {
+        Debug.Log("Kurwa");
+        foreach (EnemyController enemy in enemies)
+        {
+            enemy.MissonOver();
+        }
+    }
 }
