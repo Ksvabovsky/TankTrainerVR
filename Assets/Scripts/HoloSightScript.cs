@@ -34,6 +34,10 @@ public class HoloSightScript : MonoBehaviour
 
     [Space(10)]
 
+    [SerializeField] private Animation StartUpAnim;
+
+    [Space(10)]
+
     [SerializeField] private GameObject Completed;
     [SerializeField] private GameObject CompletedFirstButton;
 
@@ -77,6 +81,7 @@ public class HoloSightScript : MonoBehaviour
     [SerializeField] Material compassMat;
     [SerializeField] float playerDirection;
     [SerializeField] float compassOffsetValue;
+    [SerializeField] float compassUVOffsetValue;
 
 
     private void Awake()
@@ -160,7 +165,7 @@ public class HoloSightScript : MonoBehaviour
         speedText.text = "SPEED\n" + Mathf.Round(player.GetSpeed() * 3600f / 1000f) + "KPH";
 
 
-        compassOffsetValue = playerDirection / 360f;
+        compassOffsetValue = playerDirection / 360f + compassUVOffsetValue;
 
 
         compassMat.SetTextureOffset("_BaseMap", new Vector2(compassOffsetValue, 0));
@@ -171,8 +176,9 @@ public class HoloSightScript : MonoBehaviour
     {
         Debug.Log("start");
         player.StartTank();
-        ChangeMenuToHud();
+        StartUpAnim.Play();
     }
+
 
     public void MissionCompleted()
     {

@@ -75,5 +75,16 @@ public class RadarScript : MonoBehaviour
         }
     }
 
-    
+    private void OnDisable()
+    {
+        enemies = enemyManager.GetEnemies();
+        foreach (EnemyController enemy in enemies)
+        {
+            if (enemy.square != null)
+            {
+                Destroy(enemy.square);
+            }
+        }
+    }
+
 }

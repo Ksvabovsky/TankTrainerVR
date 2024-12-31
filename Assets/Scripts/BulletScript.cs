@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -35,6 +36,14 @@ public class BulletScript : MonoBehaviour
             Instantiate(effect, hit.point, this.transform.rotation);
             Collided();
         }
+    }
+
+    public void BulletInit(float Bdamage, float Bspeed, LayerMask Bmask)
+    {
+        damage = Bdamage;
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        rigidbody.velocity = transform.forward * Bspeed;
+        mask = Bmask;
     }
 
     void Collided()

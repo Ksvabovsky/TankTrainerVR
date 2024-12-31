@@ -76,9 +76,11 @@ public class PlayerHealthScript : HealthScript, IHealth
             if (hp <= 0f)
             {
                 SomebodyIsDead();
+                hpBarMaterial.SetFloat("_FillRate", 0.18f * (hp / startHP));
+                return;
             }
             hpBarMaterial.SetFloat("_FillRate", 0.18f * (hp / startHP));
-            return;
+
         }
 
         if (shield <= 0)

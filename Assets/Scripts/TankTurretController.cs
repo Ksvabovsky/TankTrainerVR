@@ -7,6 +7,8 @@ public class TankTurretController : MonoBehaviour
 {
     InputReader input;
 
+    TankController tankController;
+
     [Header("Turret")]
 
     [SerializeField] private Transform Turret;
@@ -16,7 +18,18 @@ public class TankTurretController : MonoBehaviour
     [SerializeField] private float CannonRotSpeed;
     [Space(10)]
     [SerializeField] private Transform Barrel;
+    [SerializeField] private float RecoilForce;
+    [SerializeField] private Animation BarrelShotAnim;
+    [Space(10)]
+    [SerializeField] private float ReloadTime;
+    private float reloadValue;
+
+    [Space(10)]
     [SerializeField] private GameObject BulletPrefab;
+    [SerializeField] private float BulletDamage;
+    [SerializeField] private float BulletSpeed;
+    [SerializeField] LayerMask BulletMask;
+
     [Space(10)]
     [SerializeField] private Transform TurretHUD;
     [Space(10)]
@@ -24,6 +37,16 @@ public class TankTurretController : MonoBehaviour
     [SerializeField] private bool zoomed;
     [SerializeField] private float defaultFOV;
     [SerializeField] private float zoomFOV;
+
+    [Header("TurretUI")]
+
+    [SerializeField] private TurretState turretState;
+    Coroutine reloadCoroutine;
+
+    [SerializeField] private TMP_Text reloadText1;
+    [SerializeField] private TMP_Text turretStateText1;
+    [SerializeField] private TMP_Text reloadText2;
+    [SerializeField] private TMP_Text turretStateText2;
 
     [Header("Locking")]
 
@@ -48,6 +71,7 @@ public class TankTurretController : MonoBehaviour
     void Awake()
     {
         input = GetComponent<InputReader>();
+        tankController = GetComponent<TankController>();
     }
 
     void Start()
@@ -64,6 +88,14 @@ public class TankTurretController : MonoBehaviour
         input.ReleaseLockAction += ReleaseLock;
         lockState = LockState.NoLock;
 
+        TurretReady();
+
+    }
+
+    private void OnDisable()
+    {
+        lockState = LockState.NoLock;
+        turretState = TurretState.Disabled;
     }
 
     // Update is called once per frame
@@ -129,9 +161,53 @@ public class TankTurretController : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
-        Rigidbody rigidbody = bullet.GetComponent<Rigidbody>();
-        rigidbody.velocity = Barrel.transform.forward * 200;
+        if (turretState == TurretState.Ready)
+        {
+            GameObject bullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
+            BulletScript bs = bullet.GetComponent<BulletScript>();
+            bs.BulletInit(BulletDamage, BulletSpeed, BulletMask);
+            TurretReload();
+            tankController.AddForce(Barrel.transform.forward * -1 * RecoilForce, Barrel.transform.position);
+            BarrelShotAnim.Play();
+        }
+    }
+
+    void TurretReady()
+    {
+        turretState = TurretState.Ready;
+        turretStateText1.text = "READY";
+        turretStateText2.text = "READY";
+
+        reloadValue = ReloadTime;
+        reloadText1.text = reloadValue.ToString();
+        reloadText2.text = reloadValue.ToString();
+    }
+
+    void TurretReload()
+    {
+        turretState = TurretState.Reloading;
+        turretStateText1.text = "RELOADING";
+        turretStateText2.text = "RELOADING";
+
+        reloadCoroutine = StartCoroutine(Reloading());
+    }
+
+    IEnumerator Reloading()
+    {
+        
+        while (reloadValue > 0)
+        {
+            yield return new WaitForSeconds(0.1f);
+            reloadValue -= 0.1f;
+            reloadValue = Mathf.Round( reloadValue * 10f);
+            reloadValue = reloadValue / 10f;
+            reloadText1.text = reloadValue.ToString();
+            reloadText2.text = reloadValue.ToString();
+
+        }
+
+        TurretReady();
+        
     }
 
     void Zoom()
@@ -237,6 +313,13 @@ public class TankTurretController : MonoBehaviour
         Locked
     }
 
+    enum TurretState
+    {
+        Ready,
+        Reloading,
+        Disabled
+    }
+
 
     private void OnDrawGizmos()
     {
@@ -246,4 +329,6 @@ public class TankTurretController : MonoBehaviour
             Gizmos.DrawLine(TurretCam.transform.position, debugPos);
         }
     }
+
+    
 }

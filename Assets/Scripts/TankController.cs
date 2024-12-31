@@ -10,26 +10,12 @@ public class TankController : MonoBehaviour
 
     bool active;
 
+    Rigidbody rb;
     InputReader input;
-
+    
+    ProtoDriveController driveController;
     TankTurretController turretScript;
     [SerializeField] HoloSightScript HUDController;
-    
-
-    Rigidbody rb;
-
-    [Header("HoverPhysics")]
-
-    [SerializeField] private Transform[] anchors = new Transform[4];
-    [SerializeField] RaycastHit[] hits = new RaycastHit[4];
-
-    public AnimationCurve hoverPower;
-    [Space(10)]
-    [SerializeField] private float currentPower;
-    [SerializeField] private float multiplier;
-    [SerializeField] private float moveForce, turnTorque;
-
-    
 
     [Header("ControlsVis")]
 
@@ -75,6 +61,7 @@ public class TankController : MonoBehaviour
     {
         input = GetComponent<InputReader>();
         rb = GetComponent<Rigidbody>();
+        driveController = GetComponent<ProtoDriveController>();
         turretScript = GetComponent<TankTurretController>();
 
         Application.targetFrameRate = -1;
@@ -94,58 +81,17 @@ public class TankController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        
-
-
-        for (int i = 0; i < 4; i++)
-        {
-            ApplyForce(anchors[i], hits[i]);
-        }
-
-        rb.AddForce(input.GetDrive() * moveForce * transform.forward);
-        rb.AddForce(input.GetStrafe() * moveForce * transform.right);
-        rb.AddTorque(input.GetTurn() * turnTorque * transform.up);
-    }
-
     private void Update()
     {
-       
-
-        if (joystick)
-            joystick.transform.localEulerAngles = new Vector3(input.GetAim().y * joyAngle, 0f, input.GetAim().x * joyAngle * -1);
-        if (throttle)
-            throttle.transform.localPosition = new Vector3(throttleOrigin.x, throttleOrigin.y, throttleOrigin.z + throttleDist * input.GetDrive());
-
-    }
-
-    void ApplyForce(Transform anchor, RaycastHit hit)
-    {
-        if (Physics.Raycast(anchor.position, -anchor.up, out hit))
+        if (active)
         {
-            float force = 0;
-            force = Mathf.Abs(1 / (hit.point.y - anchor.position.y));
-            //currentPower = Mathf.Sqrt(multiplier * (hoverPower.Evaluate(force) + 1));
-            rb.AddForceAtPosition(transform.up * force, anchor.position, ForceMode.Acceleration);
-        }
-    }
 
-    
-
-    
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        for (int i = 0; i < 4; i++)
-        {
-            RaycastHit hit;
-            Gizmos.DrawSphere(anchors[i].position, 0.2f);
-
-            Physics.Raycast(anchors[i].position, -anchors[i].up, out hit);
-            Gizmos.DrawSphere(hit.point, 0.2f);
-            Gizmos.DrawLine(anchors[i].position, hit.point);
+            if (joystick)
+                joystick.transform.localEulerAngles = new Vector3(input.GetAim().y * joyAngle, 0f, input.GetAim().x * joyAngle * -1);
+            if (throttle)
+                throttle.transform.localPosition = new Vector3(throttleOrigin.x, throttleOrigin.y, throttleOrigin.z + throttleDist * input.GetDrive());
+            float rpm = 0.5f + 0.15f * Mathf.Abs(input.GetDrive()) + 0.1f * Mathf.Abs(input.GetStrafe());
+            gauges.SetNumbers(vrpm1: rpm, vrpm2: rpm);
         }
     }
 
@@ -163,15 +109,32 @@ public class TankController : MonoBehaviour
     {
         GameStateManager.instance.GameStarted();  
         active = true;
-        rb.constraints = RigidbodyConstraints.None;
+        
         //gauges.enabled = true;
-        turretScript.enabled = true;
         
         startAnim.Play("ScreensOn");
         glassAnim.Play("Hello World");
         EngineAudio.Play();
 
         input.ChangeToTank();
+
+        StartCoroutine(StartEnum());
+
+    }
+
+    IEnumerator StartEnum()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        driveController.enabled = true;
+        rb.constraints = RigidbodyConstraints.None;
+
+        yield return new WaitForSeconds(2.0f);
+        radarScript.enabled = true;
+
+        yield return new WaitForSeconds(0.5f);
+        turretScript.enabled = true;
+
 
     }
 
@@ -181,11 +144,17 @@ public class TankController : MonoBehaviour
         active = false;
         rb.constraints = RigidbodyConstraints.FreezeAll;
         turretScript.enabled = false;
+        driveController.enabled = false;
+        radarScript.enabled = false;
+        gauges.Zero();
+
         startAnim.Play("ScreensOFF");
         glassAnim.Play("CoverGlass");
         EngineAudio.Stop();
 
         HUDController.MissionOver();
+        PlayerUnlocked();
+
         input.ChangeToUI();
 
     }
@@ -249,6 +218,11 @@ public class TankController : MonoBehaviour
     {
         UIAudio.PlayOneShot(clickAudio);
         Debug.Log("chujaudio");
+    }
+
+    public void AddForce(Vector3 direction, Vector3 position)
+    {
+        rb.AddForceAtPosition(direction, position, ForceMode.Impulse);
     }
 
 }
