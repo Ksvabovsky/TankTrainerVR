@@ -4,13 +4,13 @@ using System.Threading;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class BulletScript : MonoBehaviour
+public class BulletScript : MonoBehaviour, IBullet
 {
     [SerializeField] LayerMask mask;
     [SerializeField] GameObject effect;
     [SerializeField] float damage = 1; 
 
-    [SerializeField] BulletManager BM;
+    [SerializeField] protected BulletManager BM;
 
     public void OnEnable()
     {

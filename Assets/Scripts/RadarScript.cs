@@ -32,7 +32,7 @@ public class RadarScript : MonoBehaviour
         enemies = enemyManager.GetEnemies();
         foreach(EnemyController enemy in enemies)
         {
-            if (enemy.isPlayerLocked())
+            if (enemy.IsPlayerLocked())
             {
                 isLocked = true;
             }

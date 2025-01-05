@@ -217,7 +217,7 @@ public class TankController : MonoBehaviour
     public void PlayClick()
     {
         UIAudio.PlayOneShot(clickAudio);
-        Debug.Log("chujaudio");
+        //Debug.Log("klika");
     }
 
     public void AddForce(Vector3 direction, Vector3 position)

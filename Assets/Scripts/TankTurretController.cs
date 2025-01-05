@@ -156,7 +156,7 @@ public class TankTurretController : MonoBehaviour
     private void Update()
     {
         if (TurretHUD)
-            TurretHUD.transform.localEulerAngles = Turret.transform.localEulerAngles;
+            TurretHUD.transform.localEulerAngles = new Vector3(0f,Turret.transform.localEulerAngles.y,0f);
     }
 
     void Shoot()
@@ -164,8 +164,8 @@ public class TankTurretController : MonoBehaviour
         if (turretState == TurretState.Ready)
         {
             GameObject bullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
-            BulletScript bs = bullet.GetComponent<BulletScript>();
-            bs.BulletInit(BulletDamage, BulletSpeed, BulletMask);
+            IBullet b = bullet.GetComponent<IBullet>();
+            b.BulletInit(BulletDamage, BulletSpeed, BulletMask);
             TurretReload();
             tankController.AddForce(Barrel.transform.forward * -1 * RecoilForce, Barrel.transform.position);
             BarrelShotAnim.Play();
@@ -266,7 +266,7 @@ public class TankTurretController : MonoBehaviour
         {
             RaycastHit hit;
             GameObject hitObject;
-            HitboxPointer HB = null;
+            HitboxPointer HB;
 
             Physics.Raycast(TurretCam.transform.position, TurretCam.transform.forward, out hit, lockDist, lockMask);
             if (hit.collider != null)
@@ -280,16 +280,11 @@ public class TankTurretController : MonoBehaviour
 
                     //Debug.Log("M1");
 
-                    if (hitObject.tag == enemyLayerName)
-                    {
-                        //Debug.Log("M2");
-
                         if (hitObject.TryGetComponent<HitboxPointer>(out HB))
                         {
-                            //Debug.Log("M3");
+                            //Debug.Log("M2");
                             Target = HB.GetMainGameObject();
                         }
-                    }
 
                     if (Target != null)
                     {
