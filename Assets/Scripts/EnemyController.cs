@@ -10,10 +10,11 @@ public class EnemyController : MonoBehaviour
     [Header("Turret")]
     [SerializeField] protected TurretState turretState;
 
-    protected TankController player;
+    protected ProtoTankController player;
     protected EnemyTurretController turretController;
 
     [SerializeField] protected EnemyManager enemyManager;
+    private int ID;
     public GameObject square;
     public GameObject direction;
 
@@ -36,7 +37,7 @@ public class EnemyController : MonoBehaviour
     {
         Deactivate();
         turretController.enabled = false;
-        enemyManager.RemoveEnemy(this);
+        enemyManager.RemoveEnemy(ID);
     }
 
     protected void Activate()
@@ -76,6 +77,11 @@ public class EnemyController : MonoBehaviour
         return playerInRange;
     }
 
+    public void SetID(int id)
+    {
+        ID = id;
+    }
+
     public void Dead()
     {
         this.enabled = false;
@@ -103,10 +109,5 @@ public enum PlayerDetectionState
     Lost
 }
 
-public enum TurretState
-{
-    Ready,
-    Reloading,
-    Disabled
-}
+
 

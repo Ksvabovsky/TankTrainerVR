@@ -32,7 +32,7 @@ public class EnemyControllerOld : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = TankController.instance.transform;
+        target = ProtoTankController.instance.transform;
         enemyManager = EnemyManager.instance;
         //enemyManager.AddEnemy(this);
         bulletParent = BulletManager.instance.transform;

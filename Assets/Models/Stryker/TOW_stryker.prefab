@@ -779,6 +779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainParent: {fileID: 3396480509334467360}
   healthScript: {fileID: 7998424209479687666}
+  hardArmor: 0
 --- !u!1 &3396480509334467360
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 1
-  startHP: 1
+  startHP: 50
 --- !u!114 &1704901968409553491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,10 +860,10 @@ MonoBehaviour:
   BulletPrefab: {fileID: 5282870871264564655, guid: 7bd1216045469ab4a8387c28be18cc07,
     type: 3}
   BulletDamage: 60
-  BulletSpeed: 200
+  BulletSpeed: 150
   BulletMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 384
   bulletParent: {fileID: 0}
 --- !u!114 &4964656476511814113
 MonoBehaviour:
@@ -902,10 +903,10 @@ MonoBehaviour:
   - {fileID: 3787773656442156792}
   playerInRange: 0
   RaycastPosition: {fileID: 6867149716800791650}
-  Range: 90
+  Range: 150
   mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 384
   state: 0
   playerDetected: 0
   losingTime: 2
@@ -1061,6 +1062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainParent: {fileID: 3396480509334467360}
   healthScript: {fileID: 7998424209479687666}
+  hardArmor: 0
 --- !u!1 &4516802043535972508
 GameObject:
   m_ObjectHideFlags: 0

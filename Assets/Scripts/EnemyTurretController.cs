@@ -69,8 +69,6 @@ public class EnemyTurretController : MonoBehaviour
         Turret.rotation = Quaternion.Lerp(Turret.rotation, TurretTargetRotation.rotation, (turretRotSpeed / Mathf.Abs(Mathf.DeltaAngle(Turret.rotation.eulerAngles.y, TurretTargetRotation.eulerAngles.y)) )* Time.deltaTime);
         Cannon.rotation = Quaternion.Lerp(Cannon.rotation, CannonTargetRotation.rotation, (CannonRotSpeed / Mathf.Abs(Mathf.DeltaAngle(Cannon.rotation.eulerAngles.y, CannonTargetRotation.eulerAngles.y))) * Time.deltaTime);
 
-
-
         if (playerDetected == PlayerDetectionState.Detected && turretState == TurretState.Ready) {
             diff = Mathf.Abs(Mathf.DeltaAngle(Turret.rotation.eulerAngles.y, TurretTargetRotation.rotation.eulerAngles.y));
             if (diff < 5f)
@@ -78,7 +76,6 @@ public class EnemyTurretController : MonoBehaviour
                 Fire();
             }
         }
-
 
     }
 
@@ -141,4 +138,11 @@ public class EnemyTurretController : MonoBehaviour
     {
         //Gizmos.DrawWireSphere(this.transform.position, shootingDistance);
     }
+}
+
+public enum TurretState
+{
+    Ready,
+    Reloading,
+    Disabled
 }

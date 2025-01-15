@@ -7,6 +7,8 @@ public class HitboxPointer : MonoBehaviour
     [SerializeReference] private GameObject mainParent;
     [SerializeReference] private HealthScript healthScript;
 
+    [SerializeField] private bool hardArmor;
+
     public IHealth GetHealthComp()
     {
         return healthScript;
@@ -17,5 +19,8 @@ public class HitboxPointer : MonoBehaviour
         return mainParent;
     }
 
+    public bool IsHardArmor() { 
+        return hardArmor;
+    }
 
 }

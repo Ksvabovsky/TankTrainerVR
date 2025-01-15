@@ -102,12 +102,12 @@ public class PlayerHealthScript : HealthScript, IHealth
         {
             StopCoroutine(shieldRecharge);
         }
-        TankController.instance.TankLost();
+        ProtoTankController.instance.TankLost();
     }
 
     IEnumerator ShieldRecharge()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
 
         while (shield < startShield)
         {
@@ -122,7 +122,7 @@ public class PlayerHealthScript : HealthScript, IHealth
         shieldBarMaterial.SetFloat("_Alpha", 0f);
         shieldBarMaterial.SetFloat("_FillRate", 0.12f);
         
-        for (int i = 0;i<6f;i++)
+        for (int i = 0;i<8f;i++)
         {
             
 

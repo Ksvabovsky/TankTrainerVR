@@ -14,13 +14,13 @@ public class RocketScript : MonoBehaviour, IBullet
     [SerializeField] float rotateSpeed = 5f;
 
     [SerializeField] BulletManager BM;
-    [SerializeField] TankController player;
+    [SerializeField] ProtoTankController player;
     Rigidbody rb;
 
     public void OnEnable()
     {
         BM = BulletManager.instance;
-        player = TankController.instance;
+        player = ProtoTankController.instance;
         rb = GetComponent<Rigidbody>();
     }
 

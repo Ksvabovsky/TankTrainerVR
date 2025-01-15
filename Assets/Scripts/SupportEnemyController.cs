@@ -28,8 +28,9 @@ public class SupportEnemyController : EnemyController
     // Start is called before the first frame update
     void Start()
     {
-        player = TankController.instance;
+        player = ProtoTankController.instance;
         enemyManager = EnemyManager.instance;
+        enemyManager.AddEnemy(this);
     }
 
     // Update is called once per frame

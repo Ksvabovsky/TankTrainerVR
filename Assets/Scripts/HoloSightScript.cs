@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class HoloSightScript : MonoBehaviour
 {
     
-     private TankController player;
+     private ProtoTankController player;
      private Transform playerTransform;
      private PlayerHealthScript playerHP;
 
@@ -86,7 +86,7 @@ public class HoloSightScript : MonoBehaviour
 
     private void Awake()
     {
-        player = TankController.instance;
+        player = ProtoTankController.instance;
         playerTransform = player.transform;
         playerHP = player.GetComponent<PlayerHealthScript>();
     }
@@ -182,7 +182,7 @@ public class HoloSightScript : MonoBehaviour
 
     public void MissionCompleted()
     {
-
+        ChangeHUDToCompleted();
     }
 
     public void MissionOver()
