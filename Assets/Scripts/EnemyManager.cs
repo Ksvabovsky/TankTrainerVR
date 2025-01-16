@@ -7,8 +7,8 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
 
-    int NumberOfEnemies = 0;
-    int enemiesDestroyed = 0;
+    public int NumberOfEnemies = 0;
+    public int enemiesDestroyed = 0;
 
     public List<EnemyController> enemies; 
     
@@ -34,7 +34,7 @@ public class EnemyManager : MonoBehaviour
 
     public void RemoveEnemy(int id)
     {
-        enemiesDestroyed--;
+        enemiesDestroyed++;
         objectiveText.text = enemiesDestroyed.ToString() + "/"+ NumberOfEnemies.ToString();
         if(gameStateManager.GetGameState() == GameState.Playing && enemiesDestroyed == NumberOfEnemies)
         {

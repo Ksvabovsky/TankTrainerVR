@@ -902,7 +902,7 @@ MonoBehaviour:
   - {fileID: 5539850267603902817}
   - {fileID: 3787773656442156792}
   playerInRange: 0
-  RaycastPosition: {fileID: 6867149716800791650}
+  RaycastPosition: {fileID: 5582029329407847822}
   Range: 150
   mask:
     serializedVersion: 2

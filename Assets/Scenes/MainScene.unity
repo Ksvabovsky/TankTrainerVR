@@ -22209,6 +22209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb70dc95c72ceb8409d68ced9efa80eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NumberOfEnemies: 0
+  enemiesDestroyed: 0
   enemies: []
   objectiveText: {fileID: 629234452}
 --- !u!4 &1312359247
@@ -37028,7 +37030,7 @@ PrefabInstance:
     - target: {fileID: 1491855845394952032, guid: efd61db8e8adb254ab4412e1c15c5b9b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2658349853298281032, guid: efd61db8e8adb254ab4412e1c15c5b9b,
         type: 3}

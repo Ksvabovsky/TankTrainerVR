@@ -77,7 +77,10 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 384
-  effect: {fileID: 8915357666419418633, guid: 3972694f27063714c958eb942bda82db, type: 3}
+  penEffect: {fileID: 8915357666419418633, guid: 3972694f27063714c958eb942bda82db,
+    type: 3}
+  noPenEffect: {fileID: 8740185173418341361, guid: cd7bb20f8e39c1a49b8f7544b2751840,
+    type: 3}
   damage: 1
   BM: {fileID: 0}
 --- !u!136 &2271512016086734700

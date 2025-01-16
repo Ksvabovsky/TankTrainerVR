@@ -85,6 +85,7 @@ public class EnemyController : MonoBehaviour
     public void Dead()
     {
         this.enabled = false;
+
     }
 
     public void MissonOver()
