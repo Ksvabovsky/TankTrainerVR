@@ -2,99 +2,113 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(EnemyHealth))]
+[RequireComponent (typeof(EnemyTurretController))]
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] GameObject bulletPrefab;
-    [SerializeField] Transform bulletParent;
-    [SerializeField] float bulletSpeed;
+    [Header("Turret")]
+    [SerializeField] protected TurretState turretState;
 
-    [SerializeField] EnemyManager enemyManager;
+    protected ProtoTankController player;
+    protected EnemyTurretController turretController;
+
+    [SerializeField] protected EnemyManager enemyManager;
+    private int ID;
     public GameObject square;
     public GameObject direction;
 
-    [SerializeField] bool isShooting;
-    [SerializeField] bool playerInRange;
-    [SerializeField] Transform turret;
-    [SerializeField] Transform cannon;
-    [SerializeField] Transform firepoint;
-    [SerializeField] Transform target;
-    [SerializeField] Vector3 targetOffset;
-    [SerializeField] Vector3 offsetValue;
-    [SerializeField] float accuracy;
-
-    [SerializeField] float reloadTime;
-    [SerializeField] float reloadValue;
-
-    [SerializeField] float distance;
-    [SerializeField] float shootingDistance;
+    [SerializeField] protected List<MeshRenderer> elementsMaterials = new List<MeshRenderer>();
+    [SerializeField] protected List<MeshRenderer> outlinesMaterials = new List<MeshRenderer>();
 
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] protected bool playerInRange;
+
+    private void OnEnable()
     {
-        target = TankController.instance.transform;
-        enemyManager = EnemyManager.instance;
-        enemyManager.AddEnemy(this);
-        bulletParent = BulletManager.instance.transform;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        distance = Vector3.Distance(target.position, this.transform.position);
-
-        turret.LookAt(targetOffset);
-        turret.localEulerAngles = new Vector3(0f, turret.localEulerAngles.y, 0f);
-
-        firepoint.LookAt(targetOffset);
-
-        targetOffset = target.position + offsetValue;
-
-        reloadValue -= Time.deltaTime;
-
-        if(distance < shootingDistance)
+        if (enemyManager)
         {
-            playerInRange = true;
-            if(reloadValue <= 0f)
-            {
-                if(isShooting)
-                Shoot();
-            }
+            enemyManager.AddEnemy(this);
         }
-        else
-        {
-            if(playerInRange)
-            {
-                playerInRange = false;
-            }
-        }
-
+        Activate();
     }
 
-    void Shoot()
+    private void OnDisable()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation, bulletParent);
-        Rigidbody rb= bullet.GetComponent<Rigidbody>();
-        rb.velocity = bullet.transform.forward * bulletSpeed;
-
-        offsetValue = new Vector3(accuracy * Random.value, accuracy * Random.value, accuracy * Random.value);
-        reloadValue = reloadTime;
+        Deactivate();
+        turretController.enabled = false;
+        enemyManager.RemoveEnemy(ID);
     }
 
-    public bool isPlayerLocked()
+    protected void Activate()
+    {
+        foreach (var element in elementsMaterials)
+        {
+            element.material.EnableKeyword("_EMISSION");
+            element.material.SetColor("_BaseColor", Color.red);
+            element.material.SetColor("_EmissionColor", new Color(1, 0, 0, 1) * 3.2f);
+        }
+        foreach (var outline in outlinesMaterials)
+        {
+            outline.material.EnableKeyword("_EMISSION");
+            outline.material.SetColor("_Color", Color.red);
+            outline.material.SetColor("_EmissionColor", new Color(1, 0, 0, 1));
+        }
+        //DynamicGI.UpdateEnvironment();
+    }
+
+    protected void Deactivate()
+    {
+        foreach (var element in elementsMaterials)
+        {
+            element.material.SetColor("_BaseColor", Color.white);
+            element.material.SetColor("_EmissionColor", Color.white);
+        }
+        foreach (var outline in outlinesMaterials)
+        {
+            outline.material.SetColor("_Color", Color.white);
+            outline.material.SetColor("_EmissionColor", new Color(1, 1, 1, 1));
+        }
+        //DynamicGI.UpdateEnvironment();
+    }
+
+    public bool IsPlayerLocked()
     {
         return playerInRange;
     }
 
-    private void OnDrawGizmos()
+    public void SetID(int id)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(targetOffset, 0.5f);
-        
+        ID = id;
     }
 
-    private void OnDrawGizmosSelected()
+    public void Dead()
     {
-        Gizmos.DrawWireSphere(this.transform.position, shootingDistance);
+        this.enabled = false;
+
+    }
+
+    public void MissonOver()
+    {
+        Debug.Log("Roger, Stop");
+        this.enabled = false;
     }
 }
+
+public enum EnemyState
+{
+    active,
+    Moving,
+    Attacking,
+    disabled,
+}
+
+public enum PlayerDetectionState
+{
+    NotDetected,
+    Detected,
+    Lost
+}
+
+
+

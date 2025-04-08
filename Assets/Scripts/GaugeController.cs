@@ -65,8 +65,8 @@ public class GaugeController : MonoBehaviour
     {
         if (value != target)
         {
-            value = Mathf.Lerp(value, target, Time.deltaTime);
-            if (target - value < 0.005)
+            value = Mathf.Lerp(value, target, Time.deltaTime * 2f);
+            if (Mathf.Abs(target - value) < 0.005)
             {
                 value = target;
                 
@@ -89,5 +89,19 @@ public class GaugeController : MonoBehaviour
 
         pressT = vpress != -1 ? vpress : pressT;
         fuelT = vfuel != -1 ? vfuel : fuelT;
+    }
+
+    public void Zero()
+    {
+        rpm1T = 0;
+        temp1T = 0;
+        oil1T = 0;
+
+        rpm2T = 0;
+        temp2T = 0;
+        oil2T = 0;
+
+        pressT = 0;
+        fuelT = 0;
     }
 }

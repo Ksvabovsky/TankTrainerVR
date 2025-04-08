@@ -46,6 +46,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Lock"",
+                    ""type"": ""Button"",
+                    ""id"": ""52753130-dc52-496a-9395-20e69a8edcb3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Aim"",
                     ""type"": ""Value"",
                     ""id"": ""52f2d188-40a4-446d-9bcd-c62fbe02b7e7"",
@@ -390,6 +399,39 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""604bdad5-723a-4c1c-a16a-b2ced6da1ff7"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b8dff6a-dd5e-4a44-b3ff-d6bef59d3fa9"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed4304ea-4325-43c1-9205-4aa09dcd00f8"",
+                    ""path"": ""<HID::Thrustmaster T.Flight Hotas X>/button2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -529,6 +571,28 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""8e16e7d3-3ae0-441d-b95c-4480554ec287"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7ac8005-b40c-48a6-a9b5-ab556b12b686"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""24ca3448-51b0-418d-a81a-040ada41e441"",
                     ""path"": ""<Joystick>/trigger"",
                     ""interactions"": """",
@@ -548,6 +612,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c33ad6ac-864c-43a1-ba15-388f5aaa698b"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -558,6 +633,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_TankControl = asset.FindActionMap("TankControl", throwIfNotFound: true);
         m_TankControl_Trigger = m_TankControl.FindAction("Trigger", throwIfNotFound: true);
         m_TankControl_Zoom = m_TankControl.FindAction("Zoom", throwIfNotFound: true);
+        m_TankControl_Lock = m_TankControl.FindAction("Lock", throwIfNotFound: true);
         m_TankControl_Aim = m_TankControl.FindAction("Aim", throwIfNotFound: true);
         m_TankControl_Drive = m_TankControl.FindAction("Drive", throwIfNotFound: true);
         m_TankControl_Turn = m_TankControl.FindAction("Turn", throwIfNotFound: true);
@@ -629,6 +705,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private List<ITankControlActions> m_TankControlActionsCallbackInterfaces = new List<ITankControlActions>();
     private readonly InputAction m_TankControl_Trigger;
     private readonly InputAction m_TankControl_Zoom;
+    private readonly InputAction m_TankControl_Lock;
     private readonly InputAction m_TankControl_Aim;
     private readonly InputAction m_TankControl_Drive;
     private readonly InputAction m_TankControl_Turn;
@@ -639,6 +716,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public TankControlActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Trigger => m_Wrapper.m_TankControl_Trigger;
         public InputAction @Zoom => m_Wrapper.m_TankControl_Zoom;
+        public InputAction @Lock => m_Wrapper.m_TankControl_Lock;
         public InputAction @Aim => m_Wrapper.m_TankControl_Aim;
         public InputAction @Drive => m_Wrapper.m_TankControl_Drive;
         public InputAction @Turn => m_Wrapper.m_TankControl_Turn;
@@ -658,6 +736,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Zoom.started += instance.OnZoom;
             @Zoom.performed += instance.OnZoom;
             @Zoom.canceled += instance.OnZoom;
+            @Lock.started += instance.OnLock;
+            @Lock.performed += instance.OnLock;
+            @Lock.canceled += instance.OnLock;
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
@@ -680,6 +761,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Zoom.started -= instance.OnZoom;
             @Zoom.performed -= instance.OnZoom;
             @Zoom.canceled -= instance.OnZoom;
+            @Lock.started -= instance.OnLock;
+            @Lock.performed -= instance.OnLock;
+            @Lock.canceled -= instance.OnLock;
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
@@ -767,6 +851,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     {
         void OnTrigger(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
+        void OnLock(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnDrive(InputAction.CallbackContext context);
         void OnTurn(InputAction.CallbackContext context);

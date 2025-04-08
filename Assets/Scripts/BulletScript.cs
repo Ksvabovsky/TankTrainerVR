@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class BulletScript : MonoBehaviour
+public class BulletScript : MonoBehaviour, IBullet
 {
     [SerializeField] LayerMask mask;
-    [SerializeField] GameObject effect;
+    [SerializeField] GameObject penEffect;
+    [SerializeField] GameObject noPenEffect;
     [SerializeField] float damage = 1; 
 
-    [SerializeField] BulletManager BM;
+    [SerializeField] protected BulletManager BM;
 
     public void OnEnable()
     {
@@ -29,12 +31,36 @@ public class BulletScript : MonoBehaviour
             BM.hits.Add(hit.point);
             if(hit.collider.gameObject.TryGetComponent<HitboxPointer>(out HitboxPointer HB)){
                 IHealth targetHealth = HB.GetHealthComp();
-                targetHealth.GetDamage(damage);
                 
+                if (!HB.IsHardArmor()) {
+                    targetHealth.GetDamage(damage);
+                    if (penEffect != null)
+                    {
+                        Instantiate(penEffect, hit.point, this.transform.rotation);
+                    }
+                    Debug.Log("Hit Pen");
+                }
+                else
+                {
+                    if (noPenEffect != null)
+                    {
+                        Instantiate(noPenEffect, hit.point, this.transform.rotation);
+
+                    }
+                    Debug.Log("Hit No Pen");
+                }
             }
-            Instantiate(effect, hit.point, this.transform.rotation);
+            
             Collided();
         }
+    }
+
+    public void BulletInit(float Bdamage, float Bspeed, LayerMask Bmask)
+    {
+        damage = Bdamage;
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        rigidbody.velocity = transform.forward * Bspeed;
+        mask = Bmask;
     }
 
     void Collided()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -71,7 +72,15 @@ public class PlayerHealthScript : HealthScript, IHealth
         {
             hp = hp - damage;
             Debug.Log("Took damage: " + damage);
+
+            if (hp <= 0f)
+            {
+                SomebodyIsDead();
+                hpBarMaterial.SetFloat("_FillRate", 0.18f * (hp / startHP));
+                return;
+            }
             hpBarMaterial.SetFloat("_FillRate", 0.18f * (hp / startHP));
+
         }
 
         if (shield <= 0)
@@ -87,9 +96,18 @@ public class PlayerHealthScript : HealthScript, IHealth
 
     }
 
+    public void SomebodyIsDead()
+    {
+        if(shieldRecharge != null)
+        {
+            StopCoroutine(shieldRecharge);
+        }
+        ProtoTankController.instance.TankLost();
+    }
+
     IEnumerator ShieldRecharge()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
 
         while (shield < startShield)
         {
@@ -104,7 +122,7 @@ public class PlayerHealthScript : HealthScript, IHealth
         shieldBarMaterial.SetFloat("_Alpha", 0f);
         shieldBarMaterial.SetFloat("_FillRate", 0.12f);
         
-        for (int i = 0;i<6f;i++)
+        for (int i = 0;i<8f;i++)
         {
             
 
